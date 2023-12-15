@@ -1,0 +1,58 @@
+version: '3'
+services:
+  #Service for nameserver
+  namesrv:
+    image: apache/rocketmq:4.9.4
+    container_name: namesrv
+    ports:
+      - 9876:9876
+    volumes:
+      - ./namesrv/logs:/home/rocketmq/logs
+    command: sh mqnamesrv
+
+  #Service for broker
+  brokera:
+    image: apache/rocketmq:4.9.4
+    container_name: rmqbroker-a
+    links:
+      - namesrv
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    environment:
+      - NAMESRV_ADDR=namesrv:9876
+    volumes:
+      - ./data-a/broker/logs:/home/rocketmq/logs
+      - ./data-a/broker/store:/home/rocketmq/store
+      - ./data-a/broker/conf/broker.conf:/opt/rocketmq-ROCKETMQ_VERSION/conf/broker.conf
+    command: sh mqbroker -c /opt/rocketmq-ROCKETMQ_VERSION/conf/broker.conf
+
+  #Service for another broker -- broker1
+  brokerb:
+    image: apache/rocketmq:4.9.4
+    container_name: rmqbroker-b
+    links:
+      - namesrv
+    ports:
+      - 10929:10909
+      - 10931:10911
+      - 10932:10912
+    environment:
+      - NAMESRV_ADDR=namesrv:9876
+    volumes:
+      - ./data-b/broker/logs:/home/rocketmq/logs
+      - ./data-b/broker/store:/home/rocketmq/store
+      - ./data-b/broker/conf/broker.conf:/opt/rocketmq-ROCKETMQ_VERSION/conf/broker.conf
+    command: sh mqbroker -c /opt/rocketmq-ROCKETMQ_VERSION/conf/broker.conf
+  # service for rocketmq dashboard
+  dashboard:
+    image: schnell18/rocketmq-dashboard:1.0.0-alpine-arm64
+    container_name: dashboard
+    ports:
+      - 8989:8080
+    depends_on:
+      - namesrv
+    environment:
+      - JAVA_OPTS=- JAVA_OPTS= -Xmx256M -Xms256M -Xmn128M -Drocketmq.namesrv.addr=namesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false
+
