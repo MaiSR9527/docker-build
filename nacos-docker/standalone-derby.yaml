@@ -1,0 +1,34 @@
+version: "2"
+services:
+  nacos:
+    image: nacos/nacos-server:v2.2.3-slim
+    container_name: nacos-standalone
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone
+      - NACOS_AUTH_ENABLE=false
+      - NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789
+      - NACOS_AUTH_IDENTITY_KEY=serverIdentity99999
+      - NACOS_AUTH_IDENTITY_VALUE=security09089
+    volumes:
+      - ./standalone-logs/:/home/nacos/logs
+      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+  # prometheus:
+    # container_name: prometheus
+    # image: prom/prometheus:latest
+    # volumes:
+      # - ./prometheus/prometheus-standalone.yaml:/etc/prometheus/prometheus.yml
+    # ports:
+      # - "9090:9090"
+    # depends_on:
+      # - nacos
+    # restart: on-failure
+  # grafana:
+    # container_name: grafana
+    # image: grafana/grafana:latest
+    # ports:
+      # - 3000:3000
+    # restart: on-failure

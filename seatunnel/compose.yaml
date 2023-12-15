@@ -1,0 +1,13 @@
+version: '3'
+services:
+  seatunnel:
+    image: seatunnel:2.3.2
+    #restart: always
+    container_name: seatunnel
+    hostname: seatunnel
+    environment:
+      config: "/opt/seatunnel/config"
+    volumes:
+      - ./apache-seatunnel-2.3.2/config:/opt/seatunnel/config
+      - ./exec-job.sh:/opt/seatunnel/exec-job.sh
+      - ./env.sh:/opt/seatunnel/env.sh
