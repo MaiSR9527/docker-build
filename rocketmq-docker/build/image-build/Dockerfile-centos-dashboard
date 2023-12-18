@@ -15,9 +15,9 @@
 # limitations under the License.
 #
 
-FROM centos:7
+FROM eclipse-temurin:8-jdk-centos7
 
-RUN yum install -y java-1.8.0-openjdk-devel.x86_64 unzip openssl, which gnupg, wget \
+RUN yum install -y unzip openssl, which gnupg, wget \
  && yum clean all -y
 
 # FROM openjdk:8-jdk

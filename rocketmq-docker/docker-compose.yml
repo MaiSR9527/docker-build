@@ -47,12 +47,14 @@ services:
     command: sh mqbroker -c /opt/rocketmq-ROCKETMQ_VERSION/conf/broker.conf
   # service for rocketmq dashboard
   dashboard:
-    image: schnell18/rocketmq-dashboard:1.0.0-alpine-arm64
+    image: apache/rocketmq-dashboard:1.0.0-centos
     container_name: dashboard
     ports:
       - 8989:8080
+    links:
+      - namesrv
     depends_on:
       - namesrv
     environment:
-      - JAVA_OPTS=- JAVA_OPTS= -Xmx256M -Xms256M -Xmn128M -Drocketmq.namesrv.addr=namesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false
+      - NAMESRV_ADDR=namesrv:9876
 

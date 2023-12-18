@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  dubbo-admin-6:
+    image: apache/dubbo-admin:0.6.0
+    container_name: dubbo-admin6
+    hostname: dubbo-admin
+    # volumes:
+    #   - "./application.properties:/source/application.properties"
+    #   - "./entrypoint.sh:/usr/local/bin/entrypoint.sh"
+    ports:
+      - '8082:8080'
+    environment:
+      - admin.registry.address=zookeeper://192.168.1.108:11009
+      - admin.config-center=zookeeper://192.168.1.108:11009
+      - admin.metadata-report.address=zookeeper://192.168.1.108:11009

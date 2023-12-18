@@ -4,7 +4,7 @@ services:
     network_mode: 'host'
     image: redis:6.2.7
     container_name: redis
-    restart: always
+    # restart: always
     #logging:
     #  driver: 'json-file'
     #  options:
