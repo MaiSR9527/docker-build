@@ -1,0 +1,21 @@
+FROM openjdk:8
+
+RUN wget https://archive.apache.org/dist/seatunnel/seatunnel-web/1.0.0/apache-seatunnel-web-1.0.0-bin.tar.gz \
+    && tar zxf apache-seatunnel-web-1.0.0-bin.tar.gz \
+    && rm -rf apache-seatunnel-web-1.0.0-bin.tar.gz \
+    && mv apache-seatunnel-web-1.0.0-bin /opt/apache-seatunnel-web
+ENV SENTUNNEL_WEB_HOME=/opt/apache-seatunnel-web
+RUN chmod 777 ${SENTUNNEL_WEB_HOME}/bin/seatunnel-backend-daemon.sh
+COPY ./apache-seatunnel-2.3.3/lib/mysql-connector-java-8.0.30.jar ${SENTUNNEL_WEB_HOME}/libs
+COPY ./apache-seatunnel-2.3.3/config/hazelcast-client.yaml ${SENTUNNEL_WEB_HOME}/conf/
+COPY ./apache-seatunnel-2.3.3/connectors/plugin-mapping.properties ${SENTUNNEL_WEB_HOME}/conf/
+# 执行初始化脚本时需要
+ENV HOSTNAME="localhost"
+ENV PORT="3306"
+ENV USERNAME="root"
+ENV PASSWORD="123456"
+
+EXPOSE 8801
+
+WORKDIR /opt/apache-seatunnel-web
+ENTRYPOINT [ "/bin/sh", "-c", " ${SENTUNNEL_WEB_HOME}/bin/seatunnel-backend-daemon.sh start && tail -f /dev/null" ]

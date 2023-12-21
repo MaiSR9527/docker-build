@@ -1,13 +1,32 @@
 version: '3'
 services:
   seatunnel:
-    image: seatunnel:2.3.2
+    image: apache/seatunnel:2.3.3
     #restart: always
     container_name: seatunnel
     hostname: seatunnel
-    environment:
-      config: "/opt/seatunnel/config"
+    ports:
+      - 5801:5801
     volumes:
-      - ./apache-seatunnel-2.3.2/config:/opt/seatunnel/config
-      - ./exec-job.sh:/opt/seatunnel/exec-job.sh
-      - ./env.sh:/opt/seatunnel/env.sh
+      # 挂载任务配置文件
+      - ./jobs:/opt/jobs
+      - ./logs:/opt/seatunnel/logs
+  # seatunel-web:
+  #   image: apache/seatunnel-web:1.0.0
+  #   container_name: seatunnel-web
+  #   hostname: seatunnel-web
+  #   privileged: true
+  #   ports:
+  #     - 8801:8801
+  #   volumes:
+  #     - ./apache-seatunnel-2.3.3/config/hazelcast-client.yaml:/opt/apache-seatunnel-web/conf/hazelcast-client.yaml
+  #     - ./apache-seatunnel-2.3.3/connectors/plugin-mapping.properties:/opt/apache-seatunnel-web/conf/plugin-mapping.properties
+  #     - ./application.yml:/opt/apache-seatunnel-web/conf/application.yml
+  #   depends_on:
+  #     - seatunnel
+  #   environment:
+  #     - HOSTNAME="localhost"
+  #     - PORT="3306"
+  #     - USERNAME="root"
+  #     - PASSWORD="mymymypwd"
+    

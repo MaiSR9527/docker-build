@@ -5,3 +5,6 @@ data/
 *.jar
 *.out
 store/
+
+apache-seatunnel-2.3.*/
+seatunnel-web/
