@@ -1,8 +1,8 @@
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;sys/types.h&gt;
-#include &lt;sys/wait.h&gt;
-#include &lt;unistd.h&gt;
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 void sig_handler(int signo)
 {
