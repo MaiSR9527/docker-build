@@ -18,15 +18,16 @@ RUN set -eux; \
                    cmake; \
     yum clean all; \
     yum makecache
-#RUN curl -SLO "https://dl.google.com/go/go$GO_VERSION.linux-arm64.tar.gz" \
-#    && tar -C /usr/local -xzf "go$GO_VERSION.linux-arm64.tar.gz" \
-#    && rm "go$GO_VERSION.linux-arm64.tar.gz"
+ENV GO_VERSION 1.15.6
+RUN curl -SLO "https://dl.google.com/go/go$GO_VERSION.linux-arm64.tar.gz" \
+    && tar -C /usr/local -xzf "go$GO_VERSION.linux-arm64.tar.gz" \
+    && rm "go$GO_VERSION.linux-arm64.tar.gz"
 
 # 安装Go语言编译器和标准库
-ENV GO_VERSION 1.15.6
-RUN curl -SLO "https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz" \
-    && tar -C /usr/local -xzf "go$GO_VERSION.linux-amd64.tar.gz" \
-    && rm "go$GO_VERSION.linux-amd64.tar.gz"
+
+#RUN curl -SLO "https://dl.google.com/go/go$GO_VERSION.linux-amd64.tar.gz" \
+#    && tar -C /usr/local -xzf "go$GO_VERSION.linux-amd64.tar.gz" \
+#    && rm "go$GO_VERSION.linux-amd64.tar.gz"
 
 # 设置Go语言环境变量
 ENV PATH="/usr/local/go/bin:${PATH}"
