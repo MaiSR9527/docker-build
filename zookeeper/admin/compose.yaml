@@ -1,9 +1,10 @@
 version: "3"
-
 services:
-  dubbo-admin-6:
+  dubbo-admin:
     image: apache/dubbo-admin:0.6.0
-    container_name: dubbo-admin6
+#    networks:
+#      - zookeeper_zk_network
+    container_name: dubbo-admin
     hostname: dubbo-admin
     # volumes:
     #   - "./application.properties:/source/application.properties"
@@ -11,6 +12,10 @@ services:
     ports:
       - '8082:8080'
     environment:
-      - admin.registry.address=zookeeper://192.168.1.108:11009
-      - admin.config-center=zookeeper://192.168.1.108:11009
-      - admin.metadata-report.address=zookeeper://192.168.1.108:11009
+      - admin.registry.address=zookeeper://172.31.103.46:2181
+      - admin.config-center=zookeeper://172.31.103.46:2181
+      - admin.metadata-report.address=zookeeper://172.31.103.46:2181
+
+#networks:
+#  zookeeper_zk_network:
+#    external: true
