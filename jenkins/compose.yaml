@@ -4,9 +4,13 @@ services:
     image: jenkins/jenkins:latest
     ports:
       - "808:8080"
+    user: root
+    environment:
+      TZ: Asia/Shanghai
     volumes:
       - ./jenkins_home:/var/jenkins_home
-      - ./ssh/:/var/jenkins_home/.ssh
+      - ./ssh:/var/jenkins_home/.ssh
+      - ./ssh:/root/.ssh
   #ssh-agent:
   #  image: jenkins/ssh-agent
 volumes:

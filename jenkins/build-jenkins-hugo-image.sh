@@ -9,7 +9,7 @@ fi
 cd docker && rm -rf Dockerfile
 
 if [[ $jdk = '17' ]]; then
-  ehco 'use debian jdk17'
+  echo 'use debian jdk17'
   cp 17/debian/bookworm/hotspot/Dockerfile Dockerfile
 elif [[ $jdk = '11' ]]; then
   echo 'use debian jdk11'
@@ -21,8 +21,8 @@ else
   echo 'usage build-jenkins-hugo.sh 11/17/21'
 fi
 # macos 上使用gsed, linux 上使用sed
-gsed -i '/ENV LANG C.UTF-8/i\apt-get install -y hugo' Dockerfile
-#sed -i '/ENV LANG C.UTF-8/i\apt-get install -y hugo' Dockerfile
+gsed -i '/ENV LANG C.UTF-8/i\RUN apt-get update && apt-get install -y hugo' Dockerfile
+#sed -i '/ENV LANG C.UTF-8/i\RUN apt install hugo' Dockerfile
 docker build . -t jenkins-hugo:latest
 
 echo "build done."
