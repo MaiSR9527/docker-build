@@ -16,3 +16,6 @@ jenkins_home/
 #ssh
 .ssh/
 ssh/
+
+shenyu/
+portainer/
